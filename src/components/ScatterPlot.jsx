@@ -11,6 +11,7 @@ import {
 } from 'recharts'
 import { linearRegression } from '../utils/calculations'
 import { COLORS } from '../utils/constants'
+import InfoTooltip from './InfoTooltip'
 
 /**
  * Scatter plot showing actual vs model CF with regression line.
@@ -45,7 +46,10 @@ export default function ScatterPlot({ actualCF, modelCF, stats }) {
   return (
     <div className="bg-white rounded-lg shadow p-3">
       <div className="flex justify-between items-center mb-1">
-        <h3 className="text-sm font-bold text-gray-800">Actual vs Model</h3>
+        <h3 className="text-sm font-bold text-gray-800 flex items-center">
+          Actual vs Model
+          <InfoTooltip text="Each point represents one hour. Points along the dashed diagonal indicate perfect prediction. Vertical spread shows prediction error. Clustering near the line indicates high correlation." />
+        </h3>
         <div className="text-xs text-gray-600">
           r = <span className="font-mono font-bold text-blue-600">{stats.r.toFixed(3)}</span>
           <span className="mx-1">·</span>

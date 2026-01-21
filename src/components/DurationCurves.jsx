@@ -11,6 +11,7 @@ import {
 } from 'recharts'
 import { generateDurationCurve } from '../utils/calculations'
 import { COLORS } from '../utils/constants'
+import InfoTooltip from './InfoTooltip'
 
 /**
  * Duration curves showing sorted CF values for actual and model.
@@ -48,7 +49,10 @@ export default function DurationCurves({ actualCF, modelCF, stats }) {
   return (
     <div className="bg-white rounded-lg shadow p-3">
       <div className="flex justify-between items-center mb-1">
-        <h3 className="text-sm font-bold text-gray-800">Duration Curves</h3>
+        <h3 className="text-sm font-bold text-gray-800 flex items-center">
+          Duration Curves
+          <InfoTooltip text="Capacity factors sorted from highest to lowest. Shows the distribution of output levels across the year. Closely matching curves indicate the model captures the full range of generation patterns, not just averages." />
+        </h3>
         <div className="text-xs text-gray-600">
           Avg: <span className="font-mono text-blue-600">{(stats.actualAvgCF * 100).toFixed(1)}%</span>
           <span className="mx-1">·</span>
@@ -73,7 +77,7 @@ export default function DurationCurves({ actualCF, modelCF, stats }) {
             formatter={(value) => [(value * 100).toFixed(1) + '%']}
             labelFormatter={(label) => `Hour ${label.toLocaleString()}`}
           />
-          <Legend />
+          <Legend verticalAlign="top" align="right" wrapperStyle={{ paddingBottom: 10 }} />
 
           <Line
             type="monotone"

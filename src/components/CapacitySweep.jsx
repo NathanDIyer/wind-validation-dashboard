@@ -12,6 +12,7 @@ import {
 } from 'recharts'
 import { mean } from '../utils/calculations'
 import { COLORS } from '../utils/constants'
+import InfoTooltip from './InfoTooltip'
 
 /**
  * Calculate hourly match at a given generation percentage of load.
@@ -82,7 +83,10 @@ export default function CapacitySweep({ actualCF, modelCF }) {
     <div className="bg-white rounded-lg shadow p-3">
       <div className="flex justify-between items-center mb-1">
         <div>
-          <h3 className="text-sm font-bold text-gray-800">Capacity Sweep</h3>
+          <h3 className="text-sm font-bold text-gray-800 flex items-center">
+            Capacity Sweep
+            <InfoTooltip text="Shows what percentage of load can be served directly by wind at different capacity buildouts, assuming flat load and no storage. At 100% (dashed line), annual generation equals annual load. The gap between curves indicates model error in predicting temporal matching." />
+          </h3>
           <p className="text-[10px] text-gray-500">
             Load served directly by wind (no storage) at different buildouts
           </p>
@@ -114,7 +118,7 @@ export default function CapacitySweep({ actualCF, modelCF }) {
             ]}
             labelFormatter={(pct) => `Generation: ${pct.toFixed(0)}% of load`}
           />
-          <Legend />
+          <Legend verticalAlign="top" align="right" wrapperStyle={{ paddingBottom: 10 }} />
 
           {/* Reference line at 100% generation = load */}
           <ReferenceLine x={100} stroke="#9ca3af" strokeDasharray="5 5" />

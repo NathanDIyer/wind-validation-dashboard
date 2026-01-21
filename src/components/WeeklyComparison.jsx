@@ -6,10 +6,10 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from 'recharts'
 import { COLORS } from '../utils/constants'
+import InfoTooltip from './InfoTooltip'
 
 const HOURS_PER_WEEK = 168
 
@@ -124,7 +124,10 @@ export default function WeeklyComparison({ actualCF, modelCF }) {
   return (
     <div className="bg-white rounded-lg shadow p-3">
       <div className="flex items-center justify-between mb-2">
-        <h3 className="text-sm font-bold text-gray-800">Weekly Comparison</h3>
+        <h3 className="text-sm font-bold text-gray-800 flex items-center">
+          Weekly Comparison
+          <InfoTooltip text="Hourly capacity factor comparison for selected weeks. Use the dropdowns to explore different periods. Look for systematic over/under-prediction patterns during high or low wind periods." />
+        </h3>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1">
             <div className="w-3 h-0.5 bg-blue-600"></div>

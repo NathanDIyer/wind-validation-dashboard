@@ -4,6 +4,7 @@ import WeeklyComparison from './components/WeeklyComparison'
 import ScatterPlot from './components/ScatterPlot'
 import DurationCurves from './components/DurationCurves'
 import CapacitySweep from './components/CapacitySweep'
+import InfoTooltip from './components/InfoTooltip'
 import { calculateCorrelation, mean } from './utils/calculations'
 import { DEFAULT_PARAMS, OPTIMAL_PARAMS } from './utils/constants'
 
@@ -128,11 +129,12 @@ function App() {
             </div>
             <div className="flex items-center gap-4">
               <div className="text-right">
-                <div className="text-2xl font-bold text-blue-600">
+                <div className="text-2xl font-bold text-blue-600 flex items-center justify-end">
                   r = {stats.r.toFixed(3)}
+                  <InfoTooltip text="Pearson correlation (r) measures how closely the ERA5 satellite-derived wind model matches actual turbine output. Values above 0.85 indicate the model reliably captures hourly generation patterns, making it suitable for grid planning and forecasting." />
                 </div>
                 <div className="text-sm text-gray-500">
-                  R² = {(stats.r2 * 100).toFixed(1)}%
+                  R² = {(stats.r2 * 100).toFixed(1)}% variance explained
                 </div>
               </div>
               <div className={`px-3 py-1.5 rounded text-sm text-white font-semibold ${
@@ -165,17 +167,17 @@ function App() {
 
           {/* Right content - Charts */}
           <div className="flex-1 space-y-4">
-            {/* Primary validation: Scatter and Duration side by side */}
-            <div className="grid grid-cols-2 gap-4">
-              <ScatterPlot actualCF={actualCF} modelCF={modelCF} stats={stats} />
-              <DurationCurves actualCF={actualCF} modelCF={modelCF} stats={stats} />
-            </div>
+            {/* Top: Weekly comparison (above fold) */}
+            <WeeklyComparison actualCF={actualCF} modelCF={modelCF} />
 
-            {/* Grid planning metric */}
+            {/* Middle: Capacity sweep (above fold) */}
             <CapacitySweep actualCF={actualCF} modelCF={modelCF} />
 
-            {/* Detailed temporal view */}
-            <WeeklyComparison actualCF={actualCF} modelCF={modelCF} />
+            {/* Below fold: Duration curves */}
+            <DurationCurves actualCF={actualCF} modelCF={modelCF} stats={stats} />
+
+            {/* Bottom: Scatter plot */}
+            <ScatterPlot actualCF={actualCF} modelCF={modelCF} stats={stats} />
           </div>
         </div>
       </main>
