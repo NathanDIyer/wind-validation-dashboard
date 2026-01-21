@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import ParameterPanel from './components/ParameterPanel'
+import WeeklyComparison from './components/WeeklyComparison'
+import ScatterPlot from './components/ScatterPlot'
+import DurationCurves from './components/DurationCurves'
 import CapacitySweep from './components/CapacitySweep'
 import { calculateCorrelation, mean } from './utils/calculations'
 import { DEFAULT_PARAMS, OPTIMAL_PARAMS } from './utils/constants'
@@ -136,10 +139,10 @@ function App() {
       </header>
 
       {/* Main content */}
-      <main className="max-w-4xl mx-auto px-4 py-6">
+      <main className="max-w-7xl mx-auto px-4 py-6">
         <div className="flex gap-6">
           {/* Left sidebar - Parameters */}
-          <div className="w-56 flex-shrink-0">
+          <div className="w-64 flex-shrink-0">
             <ParameterPanel
               params={params}
               onParamChange={handleParamChange}
@@ -147,8 +150,18 @@ function App() {
             />
           </div>
 
-          {/* Right content - Capacity Sweep */}
-          <div className="flex-1">
+          {/* Right content - Charts */}
+          <div className="flex-1 space-y-6">
+            {/* Weekly comparison */}
+            <WeeklyComparison actualCF={actualCF} modelCF={modelCF} />
+
+            {/* Scatter and Duration side by side */}
+            <div className="grid grid-cols-2 gap-6">
+              <ScatterPlot actualCF={actualCF} modelCF={modelCF} stats={stats} />
+              <DurationCurves actualCF={actualCF} modelCF={modelCF} stats={stats} />
+            </div>
+
+            {/* Capacity sweep */}
             <CapacitySweep actualCF={actualCF} modelCF={modelCF} />
           </div>
         </div>
