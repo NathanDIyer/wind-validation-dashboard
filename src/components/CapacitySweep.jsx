@@ -28,7 +28,7 @@ function calculateMatchAtPct(cfProfile, avgCF, genPctOfLoad) {
   // Normalize: at 100%, sum of (cf * scale) should equal sum of hourly load (1/8760 each)
   // hourlyLoad = 1/8760 of annual (normalized to 1)
   // hourlyGen = cf * scaleFactor * (1 / avgCF) to normalize so avg gen at 100% = avg load
-  const genScale = scaleFactor / avgCF
+  const genScale = scaleFactor / (avgCF * n)
 
   for (let i = 0; i < n; i++) {
     const hourlyGen = cfProfile[i] * genScale
