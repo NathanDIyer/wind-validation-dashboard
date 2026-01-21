@@ -116,40 +116,35 @@ function App() {
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
       <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-xl font-bold text-gray-900">
                 Wind Validation Dashboard
               </h1>
               <p className="text-sm text-gray-600">
-                {data.metadata.location} {data.metadata.year} • {data.metadata.nameplate_mw.toFixed(1)} MW Nameplate
+                {data.metadata.location} {data.metadata.year} · {data.metadata.nameplate_mw.toFixed(1)} MW
               </p>
             </div>
-            <div className="text-right">
-              <div className="flex items-center justify-end gap-3">
-                <div>
-                  <div className="text-3xl font-bold text-blue-600">
-                    r = {stats.r.toFixed(3)}
-                  </div>
-                  <div className="text-lg text-gray-600">
-                    R² = {(stats.r2 * 100).toFixed(1)}%
-                  </div>
+            <div className="flex items-center gap-4">
+              <div className="text-right">
+                <div className="text-2xl font-bold text-blue-600">
+                  r = {stats.r.toFixed(3)}
                 </div>
-                <div className={`px-3 py-2 rounded-lg text-white font-bold ${
-                  stats.r >= 0.85 ? 'bg-green-500' :
-                  stats.r >= 0.75 ? 'bg-lime-500' :
-                  stats.r >= 0.65 ? 'bg-yellow-500' :
-                  stats.r >= 0.50 ? 'bg-orange-500' : 'bg-red-500'
-                }`}>
-                  {stats.r >= 0.85 ? 'Excellent' :
-                   stats.r >= 0.75 ? 'Good' :
-                   stats.r >= 0.65 ? 'Fair' :
-                   stats.r >= 0.50 ? 'Weak' : 'Poor'}
+                <div className="text-sm text-gray-500">
+                  R² = {(stats.r2 * 100).toFixed(1)}%
                 </div>
               </div>
-              <div className="text-xs text-gray-500 mt-1">
-                Model explains {(stats.r2 * 100).toFixed(0)}% of hourly variance
+              <div className={`px-3 py-1.5 rounded text-sm text-white font-semibold ${
+                stats.r >= 0.85 ? 'bg-green-500' :
+                stats.r >= 0.75 ? 'bg-lime-500' :
+                stats.r >= 0.65 ? 'bg-yellow-500' :
+                stats.r >= 0.50 ? 'bg-orange-500' : 'bg-red-500'
+              }`}>
+                {stats.r >= 0.85 ? 'Excellent' :
+                 stats.r >= 0.75 ? 'Good' :
+                 stats.r >= 0.65 ? 'Fair' :
+                 stats.r >= 0.50 ? 'Weak' : 'Poor'}
               </div>
             </div>
           </div>
@@ -157,10 +152,10 @@ function App() {
       </header>
 
       {/* Main content */}
-      <main className="max-w-7xl mx-auto px-4 py-6">
-        <div className="flex gap-6">
+      <main className="max-w-7xl mx-auto px-4 py-4">
+        <div className="flex gap-4">
           {/* Left sidebar - Parameters */}
-          <div className="w-64 flex-shrink-0">
+          <div className="w-56 flex-shrink-0">
             <ParameterPanel
               params={params}
               onParamChange={handleParamChange}
@@ -169,18 +164,18 @@ function App() {
           </div>
 
           {/* Right content - Charts */}
-          <div className="flex-1 space-y-6">
-            {/* Weekly comparison */}
-            <WeeklyComparison actualCF={actualCF} modelCF={modelCF} />
-
-            {/* Capacity sweep */}
-            <CapacitySweep actualCF={actualCF} modelCF={modelCF} />
-
-            {/* Scatter and Duration side by side */}
-            <div className="grid grid-cols-2 gap-6">
+          <div className="flex-1 space-y-4">
+            {/* Primary validation: Scatter and Duration side by side */}
+            <div className="grid grid-cols-2 gap-4">
               <ScatterPlot actualCF={actualCF} modelCF={modelCF} stats={stats} />
               <DurationCurves actualCF={actualCF} modelCF={modelCF} stats={stats} />
             </div>
+
+            {/* Grid planning metric */}
+            <CapacitySweep actualCF={actualCF} modelCF={modelCF} />
+
+            {/* Detailed temporal view */}
+            <WeeklyComparison actualCF={actualCF} modelCF={modelCF} />
           </div>
         </div>
       </main>

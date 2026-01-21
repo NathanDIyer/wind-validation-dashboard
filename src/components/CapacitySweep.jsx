@@ -79,21 +79,20 @@ export default function CapacitySweep({ actualCF, modelCF }) {
   }, [chartData])
 
   return (
-    <div className="bg-white rounded-lg shadow p-4">
-      <div className="flex justify-between items-center mb-2">
-        <h3 className="text-lg font-bold text-gray-800">Capacity Sweep</h3>
-        <div className="text-sm text-gray-600">
-          Gap: Avg <span className="font-mono text-purple-600">{stats.avgGap.toFixed(2)}pp</span>
-          {' / '}
-          Max <span className="font-mono text-purple-600">{stats.maxGap.toFixed(2)}pp</span>
+    <div className="bg-white rounded-lg shadow p-3">
+      <div className="flex justify-between items-center mb-1">
+        <div>
+          <h3 className="text-sm font-bold text-gray-800">Capacity Sweep</h3>
+          <p className="text-[10px] text-gray-500">
+            Load served directly by wind (no storage) at different buildouts
+          </p>
+        </div>
+        <div className="text-xs text-gray-600">
+          Gap: <span className="font-mono text-purple-600">{stats.avgGap.toFixed(1)}pp</span> avg
         </div>
       </div>
 
-      <p className="text-xs text-gray-500 mb-2">
-        Hourly Match % vs Generation (as % of annual load)
-      </p>
-
-      <ResponsiveContainer width="100%" height={250}>
+      <ResponsiveContainer width="100%" height={180}>
         <LineChart data={chartData} margin={{ top: 10, right: 10, bottom: 30, left: 40 }}>
           <CartesianGrid strokeDasharray="3 3" stroke={COLORS.grid} />
           <XAxis

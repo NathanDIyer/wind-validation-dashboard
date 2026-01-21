@@ -53,21 +53,19 @@ function WeekChart({ weekIndex, actualCF, modelCF, onWeekChange }) {
 
   return (
     <div className="flex-1">
-      <div className="flex justify-between items-center mb-2">
-        <select
-          value={weekIndex}
-          onChange={(e) => onWeekChange(parseInt(e.target.value))}
-          className="text-sm border rounded px-2 py-1 bg-white"
-        >
-          {WEEKS.map((w) => (
-            <option key={w.index} value={w.index}>
-              Week {w.index + 1}: {w.label}
-            </option>
-          ))}
-        </select>
-      </div>
+      <select
+        value={weekIndex}
+        onChange={(e) => onWeekChange(parseInt(e.target.value))}
+        className="text-xs border rounded px-1.5 py-0.5 bg-white mb-1"
+      >
+        {WEEKS.map((w) => (
+          <option key={w.index} value={w.index}>
+            Week {w.index + 1}: {w.label}
+          </option>
+        ))}
+      </select>
 
-      <ResponsiveContainer width="100%" height={200}>
+      <ResponsiveContainer width="100%" height={140}>
         <LineChart data={chartData} margin={{ top: 5, right: 5, bottom: 20, left: 30 }}>
           <CartesianGrid strokeDasharray="3 3" stroke={COLORS.grid} />
           <XAxis
@@ -124,21 +122,22 @@ export default function WeeklyComparison({ actualCF, modelCF }) {
   const [week2, setWeek2] = useState(36) // September 12
 
   return (
-    <div className="bg-white rounded-lg shadow p-4">
-      <h3 className="text-lg font-bold text-gray-800 mb-2">Weekly Comparison</h3>
-
-      <div className="flex items-center justify-center gap-4 mb-2">
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-0.5 bg-blue-600"></div>
-          <span className="text-sm text-gray-600">Actual</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-0.5 bg-red-600"></div>
-          <span className="text-sm text-gray-600">Model</span>
+    <div className="bg-white rounded-lg shadow p-3">
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="text-sm font-bold text-gray-800">Weekly Comparison</h3>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1">
+            <div className="w-3 h-0.5 bg-blue-600"></div>
+            <span className="text-xs text-gray-600">Actual</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <div className="w-3 h-0.5 bg-red-600"></div>
+            <span className="text-xs text-gray-600">Model</span>
+          </div>
         </div>
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex gap-3">
         <WeekChart
           weekIndex={week1}
           actualCF={actualCF}

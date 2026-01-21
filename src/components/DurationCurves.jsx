@@ -46,17 +46,17 @@ export default function DurationCurves({ actualCF, modelCF, stats }) {
   }, [actualCF, modelCF])
 
   return (
-    <div className="bg-white rounded-lg shadow p-4">
-      <div className="flex justify-between items-center mb-2">
-        <h3 className="text-lg font-bold text-gray-800">Duration Curves</h3>
-        <div className="text-sm text-gray-600">
-          Avg CF: Actual <span className="font-mono text-blue-600">{(stats.actualAvgCF * 100).toFixed(1)}%</span>
-          {' / '}
-          Model <span className="font-mono text-red-600">{(stats.modelAvgCF * 100).toFixed(1)}%</span>
+    <div className="bg-white rounded-lg shadow p-3">
+      <div className="flex justify-between items-center mb-1">
+        <h3 className="text-sm font-bold text-gray-800">Duration Curves</h3>
+        <div className="text-xs text-gray-600">
+          Avg: <span className="font-mono text-blue-600">{(stats.actualAvgCF * 100).toFixed(1)}%</span>
+          <span className="mx-1">·</span>
+          <span className="font-mono text-red-600">{(stats.modelAvgCF * 100).toFixed(1)}%</span>
         </div>
       </div>
 
-      <ResponsiveContainer width="100%" height={280}>
+      <ResponsiveContainer width="100%" height={200}>
         <LineChart data={chartData} margin={{ top: 10, right: 10, bottom: 30, left: 40 }}>
           <CartesianGrid strokeDasharray="3 3" stroke={COLORS.grid} />
           <XAxis
