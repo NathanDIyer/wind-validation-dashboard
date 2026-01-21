@@ -173,14 +173,14 @@ function App() {
             {/* Weekly comparison */}
             <WeeklyComparison actualCF={actualCF} modelCF={modelCF} />
 
+            {/* Capacity sweep */}
+            <CapacitySweep actualCF={actualCF} modelCF={modelCF} />
+
             {/* Scatter and Duration side by side */}
             <div className="grid grid-cols-2 gap-6">
               <ScatterPlot actualCF={actualCF} modelCF={modelCF} stats={stats} />
               <DurationCurves actualCF={actualCF} modelCF={modelCF} stats={stats} />
             </div>
-
-            {/* Capacity sweep */}
-            <CapacitySweep actualCF={actualCF} modelCF={modelCF} />
           </div>
         </div>
       </main>
