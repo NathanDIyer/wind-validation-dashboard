@@ -127,11 +127,29 @@ function App() {
               </p>
             </div>
             <div className="text-right">
-              <div className="text-3xl font-bold text-blue-600">
-                r = {stats.r.toFixed(3)}
+              <div className="flex items-center justify-end gap-3">
+                <div>
+                  <div className="text-3xl font-bold text-blue-600">
+                    r = {stats.r.toFixed(3)}
+                  </div>
+                  <div className="text-lg text-gray-600">
+                    R² = {(stats.r2 * 100).toFixed(1)}%
+                  </div>
+                </div>
+                <div className={`px-3 py-2 rounded-lg text-white font-bold ${
+                  stats.r >= 0.85 ? 'bg-green-500' :
+                  stats.r >= 0.75 ? 'bg-lime-500' :
+                  stats.r >= 0.65 ? 'bg-yellow-500' :
+                  stats.r >= 0.50 ? 'bg-orange-500' : 'bg-red-500'
+                }`}>
+                  {stats.r >= 0.85 ? 'Excellent' :
+                   stats.r >= 0.75 ? 'Good' :
+                   stats.r >= 0.65 ? 'Fair' :
+                   stats.r >= 0.50 ? 'Weak' : 'Poor'}
+                </div>
               </div>
-              <div className="text-lg text-gray-600">
-                R² = {(stats.r2 * 100).toFixed(1)}%
+              <div className="text-xs text-gray-500 mt-1">
+                Model explains {(stats.r2 * 100).toFixed(0)}% of hourly variance
               </div>
             </div>
           </div>
