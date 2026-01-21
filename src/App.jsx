@@ -22,7 +22,7 @@ function App() {
 
   // Load preprocessed data
   useEffect(() => {
-    fetch('/data/preprocessed.json')
+    fetch(`${import.meta.env.BASE_URL}data/preprocessed.json`)
       .then((res) => {
         if (!res.ok) throw new Error('Failed to load data')
         return res.json()
