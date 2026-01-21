@@ -82,6 +82,7 @@ export default function DurationCurves({ actualCF, modelCF, stats }) {
             stroke={COLORS.actual}
             strokeWidth={2}
             dot={false}
+            isAnimationActive={false}
           />
           <Line
             type="monotone"
@@ -90,6 +91,7 @@ export default function DurationCurves({ actualCF, modelCF, stats }) {
             stroke={COLORS.model}
             strokeWidth={2}
             dot={false}
+            isAnimationActive={false}
           />
         </LineChart>
       </ResponsiveContainer>

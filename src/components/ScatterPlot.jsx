@@ -16,10 +16,10 @@ import { COLORS } from '../utils/constants'
  * Scatter plot showing actual vs model CF with regression line.
  */
 export default function ScatterPlot({ actualCF, modelCF, stats }) {
-  // Downsample data for performance (show every 4th point)
+  // Downsample data for performance (show every 10th point = 876 points)
   const scatterData = useMemo(() => {
     const data = []
-    for (let i = 0; i < actualCF.length; i += 4) {
+    for (let i = 0; i < actualCF.length; i += 10) {
       data.push({
         actual: actualCF[i],
         model: modelCF[i],
@@ -93,12 +93,13 @@ export default function ScatterPlot({ actualCF, modelCF, stats }) {
             fill={COLORS.actual}
             fillOpacity={0.3}
             shape="circle"
+            isAnimationActive={false}
           />
         </ScatterChart>
       </ResponsiveContainer>
 
       <div className="text-xs text-gray-500 mt-2 text-center">
-        {scatterData.length} points shown (sampled from 8760 hours)
+        {scatterData.length} points (sampled)
       </div>
     </div>
   )

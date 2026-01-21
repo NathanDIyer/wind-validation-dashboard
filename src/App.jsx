@@ -4,7 +4,7 @@ import WeeklyComparison from './components/WeeklyComparison'
 import ScatterPlot from './components/ScatterPlot'
 import DurationCurves from './components/DurationCurves'
 import CapacitySweep from './components/CapacitySweep'
-import { calculateModelCF } from './utils/powerCurve'
+import { applyPowerCurve, extrapolateWindSpeed } from './utils/powerCurve'
 import { calculateCorrelation, mean } from './utils/calculations'
 import { DEFAULT_PARAMS, OPTIMAL_PARAMS } from './utils/constants'
 
@@ -14,11 +14,8 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // Parameter state
+  // Parameter state - no debounce for instant feedback
   const [params, setParams] = useState(OPTIMAL_PARAMS)
-
-  // Debounce timer for slider updates
-  const [debouncedParams, setDebouncedParams] = useState(params)
 
   // Load preprocessed data
   useEffect(() => {
@@ -37,33 +34,46 @@ function App() {
       })
   }, [])
 
-  // Debounce parameter changes (100ms)
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedParams(params)
-    }, 100)
-    return () => clearTimeout(timer)
-  }, [params])
-
-  // Handle parameter change
+  // Handle parameter change - direct, no debounce
   const handleParamChange = useCallback((name, value) => {
     setParams((prev) => ({ ...prev, [name]: value }))
   }, [])
 
   // Handle reset
   const handleReset = useCallback((type) => {
-    if (type === 'optimal') {
-      setParams(OPTIMAL_PARAMS)
-    } else {
-      setParams(DEFAULT_PARAMS)
-    }
+    setParams(type === 'optimal' ? OPTIMAL_PARAMS : DEFAULT_PARAMS)
   }, [])
 
-  // Calculate model CF from parameters
+  // Pre-extract wind data once (avoids repeated object access)
+  const windData = useMemo(() => {
+    if (!data?.hourly) return null
+    return {
+      speeds: data.hourly.map(h => h.wind_speed_100m),
+      shears: data.hourly.map(h => h.shear_exponent || 0.14),
+    }
+  }, [data])
+
+  // Calculate model CF - optimized inline loop
   const modelCF = useMemo(() => {
-    if (!data?.hourly) return []
-    return calculateModelCF(data.hourly, debouncedParams)
-  }, [data, debouncedParams])
+    if (!windData) return []
+    const { speeds, shears } = windData
+    const { hubHeight, cutIn, ratedSpeed, cutOut, exponent, maxCf } = params
+    const result = new Array(speeds.length)
+
+    for (let i = 0; i < speeds.length; i++) {
+      // Extrapolate to hub height
+      const ws = hubHeight === 100 ? speeds[i] : speeds[i] * Math.pow(hubHeight / 100, shears[i])
+      // Apply power curve inline
+      if (ws < cutIn || ws > cutOut) {
+        result[i] = 0
+      } else if (ws >= ratedSpeed) {
+        result[i] = maxCf
+      } else {
+        result[i] = Math.min(Math.pow((ws - cutIn) / (ratedSpeed - cutIn), exponent) * maxCf, maxCf)
+      }
+    }
+    return result
+  }, [windData, params])
 
   // Extract actual CF
   const actualCF = useMemo(() => {

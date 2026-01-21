@@ -98,6 +98,7 @@ function WeekChart({ weekIndex, actualCF, modelCF, onWeekChange }) {
             stroke={COLORS.actual}
             strokeWidth={1.5}
             dot={false}
+            isAnimationActive={false}
           />
           <Line
             type="monotone"
@@ -106,6 +107,7 @@ function WeekChart({ weekIndex, actualCF, modelCF, onWeekChange }) {
             stroke={COLORS.model}
             strokeWidth={1.5}
             dot={false}
+            isAnimationActive={false}
           />
         </LineChart>
       </ResponsiveContainer>

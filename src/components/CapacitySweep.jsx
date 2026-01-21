@@ -90,6 +90,7 @@ export default function CapacitySweep({ actualCF, modelCF }) {
             stroke={COLORS.actual}
             strokeWidth={2}
             dot={false}
+            isAnimationActive={false}
           />
           <Line
             type="monotone"
@@ -98,6 +99,7 @@ export default function CapacitySweep({ actualCF, modelCF }) {
             stroke={COLORS.model}
             strokeWidth={2}
             dot={false}
+            isAnimationActive={false}
           />
         </LineChart>
       </ResponsiveContainer>
