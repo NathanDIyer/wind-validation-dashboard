@@ -124,7 +124,7 @@ export default function WeeklyComparison({ actualCF, modelCF }) {
   const [week2, setWeek2] = useState(36) // September 12
 
   return (
-    <div className="bg-white rounded-lg shadow p-4 h-full">
+    <div className="bg-white rounded-lg shadow p-4">
       <h3 className="text-lg font-bold text-gray-800 mb-2">Weekly Comparison</h3>
 
       <div className="flex items-center justify-center gap-4 mb-2">

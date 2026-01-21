@@ -43,7 +43,7 @@ export default function ScatterPlot({ actualCF, modelCF, stats }) {
   }, [regression])
 
   return (
-    <div className="bg-white rounded-lg shadow p-4 h-full">
+    <div className="bg-white rounded-lg shadow p-4">
       <div className="flex justify-between items-center mb-2">
         <h3 className="text-lg font-bold text-gray-800">Correlation Scatter</h3>
         <div className="text-right">
