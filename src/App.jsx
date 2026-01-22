@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import ParameterPanel from './components/ParameterPanel'
 import WeeklyComparison from './components/WeeklyComparison'
-import ScatterPlot from './components/ScatterPlot'
 import DurationCurves from './components/DurationCurves'
 import CapacitySweep from './components/CapacitySweep'
 import InfoTooltip from './components/InfoTooltip'
@@ -11,21 +10,30 @@ import { DEFAULT_PARAMS, OPTIMAL_PARAMS } from './utils/constants'
 function App() {
   // Data state
   const [data, setData] = useState(null)
+  const [multiResourceData, setMultiResourceData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   // Parameter state - no debounce for instant feedback
   const [params, setParams] = useState(OPTIMAL_PARAMS)
 
-  // Load preprocessed data
+  // Load preprocessed data and multi-resource data in parallel
   useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}data/preprocessed.json`)
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to load data')
-        return res.json()
-      })
-      .then((json) => {
-        setData(json)
+    Promise.all([
+      fetch(`${import.meta.env.BASE_URL}data/preprocessed.json`)
+        .then((res) => {
+          if (!res.ok) throw new Error('Failed to load main data')
+          return res.json()
+        }),
+      fetch(`${import.meta.env.BASE_URL}data/multi_resource.json`)
+        .then((res) => {
+          if (!res.ok) throw new Error('Failed to load multi-resource data')
+          return res.json()
+        })
+    ])
+      .then(([mainData, multiData]) => {
+        setData(mainData)
+        setMultiResourceData(multiData)
         setLoading(false)
       })
       .catch((err) => {
@@ -129,7 +137,17 @@ function App() {
                 {data.metadata.location} {data.metadata.year} · {data.metadata.nameplate_mw.toFixed(1)} MW
               </p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6">
+              <div className="text-right">
+                <div className="text-xs text-gray-500 uppercase tracking-wide">Capacity Factor</div>
+                <div className="text-sm">
+                  <span className="text-blue-600 font-semibold">{(stats.actualAvgCF * 100).toFixed(1)}%</span>
+                  <span className="text-gray-400 mx-1">actual</span>
+                  <span className="text-gray-300">|</span>
+                  <span className="text-red-600 font-semibold ml-1">{(stats.modelAvgCF * 100).toFixed(1)}%</span>
+                  <span className="text-gray-400 mx-1">satellite</span>
+                </div>
+              </div>
               <div className="text-right">
                 <div className="text-2xl font-bold text-blue-600 flex items-center justify-end">
                   r = {stats.r.toFixed(3)}
@@ -173,13 +191,10 @@ function App() {
             <WeeklyComparison actualCF={actualCF} modelCF={modelCF} />
 
             {/* Middle: Capacity sweep (above fold) */}
-            <CapacitySweep actualCF={actualCF} modelCF={modelCF} />
+            <CapacitySweep actualCF={actualCF} modelCF={modelCF} multiResourceData={multiResourceData} params={params} />
 
             {/* Below fold: Duration curves */}
             <DurationCurves actualCF={actualCF} modelCF={modelCF} stats={stats} />
-
-            {/* Bottom: Scatter plot */}
-            <ScatterPlot actualCF={actualCF} modelCF={modelCF} stats={stats} />
           </div>
         </div>
       </main>

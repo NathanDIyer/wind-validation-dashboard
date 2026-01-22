@@ -91,8 +91,8 @@ export default function DurationCurves({ actualCF, modelCF, stats }) {
           <Line
             type="monotone"
             dataKey="model"
-            name="Model"
-            stroke={COLORS.model}
+            name="Satellite"
+            stroke={COLORS.satellite}
             strokeWidth={2}
             dot={false}
             isAnimationActive={false}

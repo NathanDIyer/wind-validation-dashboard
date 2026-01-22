@@ -47,7 +47,7 @@ export default function ScatterPlot({ actualCF, modelCF, stats }) {
     <div className="bg-white rounded-lg shadow p-3">
       <div className="flex justify-between items-center mb-1">
         <h3 className="text-sm font-bold text-gray-800 flex items-center">
-          Actual vs Model
+          Actual vs Satellite
           <InfoTooltip text="Each point represents one hour. Points along the dashed diagonal indicate perfect prediction. Vertical spread shows prediction error. Clustering near the line indicates high correlation." />
         </h3>
         <div className="text-xs text-gray-600">
@@ -71,10 +71,10 @@ export default function ScatterPlot({ actualCF, modelCF, stats }) {
           <YAxis
             type="number"
             dataKey="model"
-            name="Model CF"
+            name="Satellite CF"
             domain={[0, 1]}
             tickFormatter={(v) => (v * 100).toFixed(0)}
-            label={{ value: 'Model CF (%)', angle: -90, position: 'insideLeft', offset: -10 }}
+            label={{ value: 'Satellite CF (%)', angle: -90, position: 'insideLeft', offset: -10 }}
           />
           <Tooltip
             formatter={(value) => [(value * 100).toFixed(1) + '%']}

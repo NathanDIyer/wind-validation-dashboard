@@ -101,8 +101,8 @@ function WeekChart({ weekIndex, actualCF, modelCF, onWeekChange }) {
           <Line
             type="monotone"
             dataKey="model"
-            name="Model"
-            stroke={COLORS.model}
+            name="Satellite"
+            stroke={COLORS.satellite}
             strokeWidth={1.5}
             dot={false}
             isAnimationActive={false}
@@ -135,7 +135,7 @@ export default function WeeklyComparison({ actualCF, modelCF }) {
           </div>
           <div className="flex items-center gap-1">
             <div className="w-3 h-0.5 bg-red-600"></div>
-            <span className="text-xs text-gray-600">Model</span>
+            <span className="text-xs text-gray-600">Satellite</span>
           </div>
         </div>
       </div>

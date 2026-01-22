@@ -4,29 +4,29 @@
 
 export const PARAMETERS = {
   exponent: {
-    min: 1.5,
-    max: 3.5,
+    min: 2.0,
+    max: 3.0,
     step: 0.1,
     default: 2.5,
-    optimal: 2.5,
+    optimal: 2.0,
     label: 'Power Exponent',
     unit: '',
   },
   cutIn: {
-    min: 1.0,
+    min: 3.0,
     max: 5.0,
     step: 0.1,
     default: 3.0,
-    optimal: 1.5,
+    optimal: 3.0,
     label: 'Cut-in Speed',
     unit: 'm/s',
   },
   ratedSpeed: {
-    min: 7.0,
+    min: 8.0,
     max: 15.0,
     step: 0.1,
     default: 10.5,
-    optimal: 8.9,
+    optimal: 9.0,
     label: 'Rated Speed',
     unit: 'm/s',
   },
@@ -44,9 +44,9 @@ export const PARAMETERS = {
     max: 1.00,
     step: 0.01,
     default: 0.90,
-    optimal: 0.84,
-    label: 'Max CF',
-    unit: '',
+    optimal: 0.81,
+    label: 'Peak Output',
+    unit: '%',
   },
   hubHeight: {
     min: 80,
@@ -69,18 +69,19 @@ export const DEFAULT_PARAMS = {
 }
 
 export const OPTIMAL_PARAMS = {
-  exponent: PARAMETERS.exponent.optimal,
-  cutIn: PARAMETERS.cutIn.optimal,
-  ratedSpeed: PARAMETERS.ratedSpeed.optimal,
-  cutOut: PARAMETERS.cutOut.optimal,
-  maxCf: PARAMETERS.maxCf.optimal,
-  hubHeight: PARAMETERS.hubHeight.optimal,
+  exponent: 2.0,
+  cutIn: 3.0,
+  ratedSpeed: 9.0,
+  cutOut: 25,
+  maxCf: 0.81,
+  hubHeight: 100,
 }
 
 // Chart colors
 export const COLORS = {
   actual: '#2563eb',      // Blue
-  model: '#dc2626',       // Red
+  satellite: '#dc2626',   // Red (renamed from model)
+  model: '#dc2626',       // Red (deprecated alias for satellite)
   grid: '#e5e7eb',
   text: '#374151',
   background: '#ffffff',
