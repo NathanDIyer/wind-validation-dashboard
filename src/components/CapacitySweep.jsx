@@ -51,15 +51,15 @@ export default function CapacitySweep({ actualCF, modelCF }) {
   const numPoints = 61  // Every 5%
 
   // Calculate sweep data for both actual and model
+  // Use actual's avgCF as reference for both so Max CF changes show up
   const chartData = useMemo(() => {
     const actualAvgCF = mean(actualCF)
-    const modelAvgCF = mean(modelCF)
 
     const data = []
     for (let i = 0; i < numPoints; i++) {
       const genPct = minPct + (i / (numPoints - 1)) * (maxPct - minPct)
       const actualMatch = calculateMatchAtPct(actualCF, actualAvgCF, genPct)
-      const modelMatch = calculateMatchAtPct(modelCF, modelAvgCF, genPct)
+      const modelMatch = calculateMatchAtPct(modelCF, actualAvgCF, genPct)
 
       data.push({
         genPct,
