@@ -16,10 +16,10 @@ export default function InfoTooltip({ text }) {
         i
       </span>
       {show && (
-        <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-2 text-xs text-gray-700 bg-white border border-gray-200 rounded-lg shadow-lg">
+        <div className="absolute z-50 top-full left-1/2 -translate-x-1/2 mt-2 w-64 p-2 text-xs text-gray-700 bg-white border border-gray-200 rounded-lg shadow-lg">
           {text}
-          <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px border-4 border-transparent border-t-white" />
-          <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-200" />
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-px border-4 border-transparent border-b-white" />
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-gray-200" />
         </div>
       )}
     </span>
