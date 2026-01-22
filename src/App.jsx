@@ -67,9 +67,11 @@ function App() {
       if (ws < cutIn || ws > cutOut) {
         result[i] = 0
       } else if (ws >= ratedSpeed) {
-        result[i] = maxCf
+        result[i] = maxCf  // Clipped at max (e.g., 10% curtailment if maxCf=0.90)
       } else {
-        result[i] = Math.min(Math.pow((ws - cutIn) / (ratedSpeed - cutIn), exponent) * maxCf, maxCf)
+        // Ramp from 0 to 1, then clip at maxCf
+        const rawCF = Math.pow((ws - cutIn) / (ratedSpeed - cutIn), exponent)
+        result[i] = Math.min(rawCF, maxCf)
       }
     }
     return result
